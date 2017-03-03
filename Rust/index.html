@@ -1,0 +1,678 @@
+<!DOCTYPE html
+<html>
+  <head>
+    <title>Web Development with Rust</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="public/custom.css" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, less-space
+
+# Web Development with Rust
+
+## Rust Hack Day,<br> HBTU Kanpur
+
+### [Rust Hack Day](https://reps.mozilla.org/e/rust-hack-day/) — 2017-03-05 
+### Amit Kumar Jaiswal — [@AMIT_GKP](https://twitter.com/AMIT_GKP_)
+
+???
+
+I'm here to talk a bit about Web Development with Rust.
+
+Or as others have stated it:
+
+Hire me for the JS, keep me for the Rust
+
+
+---
+class: center, middle, less-space
+
+## Amit Kumar Jaiswal
+### [@AMIT_GKP](https://twitter.com/AMIT_GKP) — amitkumarj441@gmail.com
+
+## Student, Open Source Enthusiast, Mozilla Representative & Docker Meetup Organizer 
+
+???
+studying computer science in UIET Kanpur University, not too far
+lots of open source stuff, maintaining libraries for Python.
+
+stuck with it, released a dozen small crates
+
+---
+class: center, middle, bigger
+
+<iframe src="http://time.hellorust.com/legacy">
+
+???
+
+as it turns out I'm bad at keeping track of time.
+
+That's why I built an awesome time tracker.
+
+maybe it is just a bare time tracker, 
+but cope with me, because it will be enough to show what I want to talk about:
+
+---
+class: center, middle, bigger
+
+# [Are we web yet?](http://arewewebyet.org/)*
+
+.footnote2[\* [arewewebyet.org](http://arewewebyet.org/)]
+
+???
+
+And that is if we are web yet.
+
+Rust is a systems programming language by heart.
+
+also just fine for webdevelopment or on a good way 
+
+The things I will be talking about today are btw listed on that site
+
+Who is a webdev?  
+Who uses Ruby?  
+Who uses Node.js?  
+Who already uses Rust?  
+Rust for webdev?
+
+---
+class: bigger, bullets
+
+# Software Stack
+
+- Backend
+- &nbsp;&nbsp; Data store &amp; Access
+- &nbsp;&nbsp; Logic / API
+- Frontend
+- &nbsp;&nbsp; HTML, CSS 
+- &nbsp;&nbsp; JavaScript
+
+???
+
+Usual stack for an app  
+later quick tour through crates that give us this
+
+Backend with datalayer, the database  
+Actual logic through a framework
+
+backend talks to your frontend
+
+UI in HTML & CSS, so a browser can display it  
+some JavaScript to make it more interactive
+
+---
+class: center, middle, nearly-huge
+
+# Backend
+
+???
+
+timetracker quite simple: 
+
+Redis for data storage
+
+Cuba, like Sinatra, for backend providing an API
+
+first: web frameworks
+
+---
+class: bullets, bigger
+
+# Webframeworks
+
+- Iron
+- Nickel
+- Rustful
+- Rustless
+- Pencil
+- …
+
+???
+
+Quite a few
+
+Two major ones: Iron and Nickel
+
+---
+class: command
+
+# Iron
+
+```bash
+fn hello(_: &mut Request) -> IronResult<Response> {
+    Ok(Response::with((status::Ok, "Hello World!")))
+}
+
+Iron::new(hello).http("localhost:3000").unwrap();
+```
+
+.footnote2[[ironframework.io](http://ironframework.io/)]
+
+???
+
+focus on providing middleware interface
+
+not batteries-included
+
+basic stuff available as middleware by Iron or others
+
+---
+class: command
+
+# Nickel.rs
+
+```bash
+let mut server = Nickel::new();
+
+server.utilize(router! {
+    get "**" => |_req, _res| {
+        "Hello world!"
+    }
+});
+
+server.listen("127.0.0.1:6767");
+```
+
+.footnote2[[nickel.rs](http://nickel.rs/)]
+
+???
+
+More bundled stuff
+
+still middleware possible
+
+relies on Macros, but usable without
+
+inspired by express.js, a node.js framework
+
+---
+class: bullets, bigger
+
+# Hyper (HTTP library)
+
+- client &amp; server
+- low-level
+- type-safe
+
+.footnote2[[hyper.rs](http://hyper.rs/)]
+
+???
+
+One thing in common: Hyper
+
+Major HTTP library for Rust
+
+provides Server & Client
+
+very low-level, type-safe
+
+---
+class: bullets, bigger
+
+# Hyper (soon)
+
+- Asynchronous IO
+- HTTP2 (hopefully)
+
+.footnote2[[hyper.rs](http://hyper.rs/)]
+
+???
+
+some issues
+
+not Asynchronous yet: more threads  
+it's being worked on, already competitive with existing web servers
+plus side: all will profit
+
+no HTTP2 in server yet  
+will follow
+
+---
+class: bullets, bigger
+
+# Database access
+
+- [MySQL](https://crates.io/crates/mysql)
+- [Postgres](https://crates.io/crates/postgres)
+- [SQLite](https://crates.io/crates/rusqlite)
+- [Redis](https://crates.io/crates/redis)
+- […](http://www.arewewebyet.org/topics/database/)
+
+.footnote[Everything above is a link ;)]
+
+???
+
+Database side looks good
+
+Clients for major databases  
+Mostly taking advantage of type system (safe interfaces)
+
+Generalized connection pool interface (useful for real usage)
+
+---
+class: bigger, command
+
+# Diesel
+
+### Rust:
+
+```bash
+Post::belonging_to(user).load(&connection)
+```
+
+### Executed SQL:
+
+```sql
+SELECT * FROM posts WHERE user_id = 1;
+```
+
+.footnote2[[diesel.rs](http://diesel.rs/)]
+
+???
+
+Coming to ORM even better off: Diesel
+
+Safe, extensible Query Builder  
+Full advantage of Type System
+
+Think ActiveRecord (Rails) without major issues
+
+It's even faster than hand-written
+
+---
+class: center, middle, bigger
+
+<iframe src="http://time.hellorust.com/app">
+
+???
+
+Listed things enough to build a basic backend
+
+I used Iron and Redis for Awesome Time Tracker
+
+and it works
+
+---
+class: center, middle, bigger
+
+# Ruby
+
+???
+
+So, first we got Ruby …
+
+---
+class: center, middle, bigger, striked
+
+# Ruby
+## Rust
+
+???
+
+… and now replaced it with Rust
+
+---
+class: center, middle, nearly-huge
+
+# Frontend
+
+???
+
+Now let's take a look at the frontend
+
+Time Tracker is a basic single-page app.
+
+Not even a big framework in use
+
+---
+class: center, middle, bigger
+
+# How do we run Rust in the Frontend?
+
+???
+
+You might wonder: Browser only knows HTML and CSS and JavaScript
+
+How do we even run Rust in the frontend?
+
+Partially right. It only understands those.
+
+But we don't have to write those.
+
+---
+class: center, middle
+
+![Emscripten](media/emscripten-logo.png)
+
+.footnote2[[emscripten.org](http://emscripten.org)]
+
+???
+
+There is a tool called Emscripten
+
+It takes whatever comes out of LLVM, a compiler backend for C and other languages 
+
+and turns that into unreadable JavaScript  
+(even more unreadable than hand-written)
+
+Rust uses LLVM
+possible to write Rust, turn that into JavaScript and have it run in the browser
+
+works in older rust with hacks  
+will work soon without hacks  
+some patches in llvm and emscripten needed
+
+
+---
+class: center, middle
+
+# Turning Rust into JavaScript:
+
+# [rust-webplatform](https://github.com/tcr/rust-webplatform)
+
+.footnote2[by tcr, tomaka and AerialX]
+
+???
+
+only problem is the interface with all the stuff available in the frontend
+
+Some nice folks already did hard work and wrote rust-webplatform  
+bindings that translate between the JavaScript part and the Rust part through some of the functions Emscripten offers.
+
+
+---
+class: command
+
+# DOM Handling
+
+```bash
+let document = webplatform::init();
+
+let track = document.element_query("#track");
+track.on("click", |_e| {
+    toggle_timer(&document);
+});
+load_dom(&document);
+```
+
+???
+
+Somewhat easy to use
+
+Access to the DOM with Rusty and type-safe interface
+
+---
+class: command
+
+# Glue code
+
+```bash
+fn ajax<F: FnMut(String) + 'a>(&self,
+                               url: &str, f: F) {
+  unsafe {
+  let b = Box::new(f);
+   let a = &*b as *const _;
+   js!{(url, a as *const libc::c_void,
+        caller::<F> as *const libc::c_void)
+       br#"
+       jQuery.ajax({url: UTF8ToString($0)})
+         .done(function(data) {
+         Runtime.dynCall('vii', $2, [$1,
+           allocate(intArrayFromString(data),
+                    'i8', ALLOC_STACK)]);
+       …
+```
+
+???
+
+'
+
+To shock you a bit
+
+Glue code necessary to give you access to jquery
+
+---
+class: center, middle, bigger
+
+<iframe src="http://time.hellorust.com/app">
+
+???
+
+I went ahead and rewrote my frontend in Rust.
+
+It still works
+
+---
+class: center, middle, bigger
+
+# JavaScript
+
+???
+
+I know I took some liberties here   
+to force the usage of Rust on the frontend.  
+
+
+---
+class: center, middle, bigger, striked
+
+# JavaScript
+## Rust
+
+???
+
+But hey, I did it. No more _pure_ JavaScript hand-written by me.
+
+Instead some nice Rust code
+
+We removed Ruby in the backend and replaced it with Rust.  
+
+We removed JavaScript in the frontend and replaced it with Rust.
+
+---
+class: center, middle, nearly-huge
+
+# Browser
+
+???
+
+Still something left that's not Rust
+
+The browser
+
+Millions of C++ code  
+The same bugs over and over again
+
+Mostly single-threaded
+
+---
+class: center, middle, bigger
+
+# Servo
+
+![Servo Screenshot](media/screenshot.png)
+
+.footnote2[[servo.org](https://servo.org/)]
+
+???
+
+Servo, a browser engine developed at Mozilla.
+
+prototype of browser engine with parallel architecture  
+from the ground up
+
+Thanks to Rust get rid of whole bug classes
+
+---
+class: center, middle, bigger
+
+![Servo](media/servo-desktop.png)
+
+???
+
+Servo runs our awesome timetracker just fine,  
+because afterall it's just some simple HTML   
+and this huge blob of JavaScript that we got from our Rust frontend code.
+
+Servo is nearwhere being a real replacement for Chrome or Firefox,
+but it's a promising experiment where Rust shines.
+
+And it got a whole lot faster lately by using the GPU for most of the layouting
+
+
+---
+class: center, middle, bigger
+
+<video controls preload="auto">
+    <source src="media/timetracker-flame-rust.mp4" type="video/mp4">
+</video>
+
+???
+
+One more  thing Servo can do:  
+It can run on mobile phones as well.
+
+Take browser engine, compile it for Android or FirefoxOS and run it
+
+Video (auf anderem bildschirm anmachen)
+
+---
+class: center, middle, bigger
+
+# C++
+
+???
+
+So at last, we replaced our large C++ based browser …
+
+---
+class: center, middle, bigger, striked
+
+# C++
+## Rust
+
+???
+
+… with some not that large Rust project
+
+which finalizes our Web stack
+
+---
+class: bullets
+
+# Recap
+
+- Backend
+- &nbsp;&nbsp; Frameworks (Iron, Nickel, ...)
+- &nbsp;&nbsp; Databases adapters (SQL, Redis, ...)
+- Frontend
+<!--- &nbsp;&nbsp; Template languages-->
+- &nbsp;&nbsp; Emscripten
+
+???
+
+Let's recap what I showed you
+
+Libraries for the backend
+
+Even some stuff for the frontend
+
+didn't even mention template libraries yet, but they are out there
+
+not everything is there yet
+
+---
+class: center, middle
+
+# Is all of this a good idea?
+## ABSOLUTELY
+
+???
+
+You might ask:
+
+Is it a good idea to use Rust everywhere
+
+To which I have to answer: ABSOLUTELY
+
+---
+class: center, middle
+
+# Ok, probably it's not
+
+???
+
+Ok, maybe it's really not the best idea to use it everywhere,  
+especially if we have good long-standing libraries in other languages  
+or if we have to compile to a completely different language
+
+---
+class: center, middle, bigger
+
+# Or maybe it is:<br>[webassembly](https://github.com/WebAssembly/design/blob/master/README.md)\* is coming
+
+.footnote2[\*"a binary format for the web"]
+
+???
+
+but maybe it still is.
+
+because WebAssembly is definitely coming
+
+it will be a binary format for the web  
+major browser implementors are working on it  
+servo has ideas how to integrate it  
+
+would allow more efficient code in the browser, e.g. games
+that's the idea …
+
+---
+class: center, middle, bigger
+
+![WASM](media/tweet.png)
+
+???
+
+but really it's just about writing more Lisp again
+
+---
+class: center, middle, bigger
+
+
+# [AreWeWebYet.org](http://www.arewewebyet.org/)*
+
+### Ask your questions at
+### Rust India Slack Channel — http://rustindia.slack.com
+
+
+.footnote2[\*Page not by me, but great resource]
+
+???
+
+So back to our initial question: ???  
+Yes, You can build stuff!
+
+The basics are there, promising way.
+
+We need more work on documentation and tutorials.
+
+People trying this stuff.  
+People developing this stuff.
+
+Take a look around.  
+arewewebyet.org lists crates
+
+Thank you. Contact. Work on Timetracker.  
+Slides later
+
+  </textarea>
+    <script src="public/remark.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+      //slideshow.togglePresenterMode();
+    </script>
+  </body>
+</html>
