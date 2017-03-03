@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,900);
+
+.remark-notes p {
+  font-size: 2.5em;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.remark-slide-content {
+  background-color: #569550; /* #3A6436; */
+  color: white;
+}
+
+code {
+  background-color: #4e4e4e;
+  color: #e6e6e6;
+  padding: 15px;
+}
+
+li > code {
+  background-color: none;
+  padding: 0;
+}
+
+a:visited, a:active, a {
+  color: white;
+  text-decoration: none;
+}
+
+.stats h1, .stats h2 {
+  background-color: rgba(203, 56, 55, 1);
+  color: white;
+  padding: 10px 20px;
+}
+
+.footnote {
+  font-size: 1.0em;
+  padding: 5px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: black; /*rgba(203, 56, 55, 1);*/
+}
+.footnote2 {
+  font-size: 1.0em;
+  padding: 5px;
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  background-color: black; /*rgba(203, 56, 55, 1);*/
+}
+
+.real-big {
+  font-size: 2em;
+}
+
+#heart {
+  position: relative;
+  top: 20px;
+}
+
+.command code {
+  font-size: 1.15em;
+}
+
+.bullets ol, .bullets ul {
+  font-size: 2em;
+}
+.bullets ul {
+  list-style-type: none;
+}
+
+.nearly-huge h1 {
+  font-size: 7em;
+}
+.huge h1 {
+  font-size: 10em;
+}
+.bigger h1 {
+  font-size: 4em;
+}
+.bigger h2 {
+  font-size: 3em;
+}
+.bigger li {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.huge-code code {
+  font-size: 3em;
+}
+
+.bigger-code code {
+  font-size: 2em;
+}
+
+.less-space h3 {
+  margin: 0;
+}
+
+iframe {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #888;
+}
+
+video {
+  margin-left: -75px;
+  width: 120%;
+}
+
+img {
+  width: 100%;
+}
+
+blockquote {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.striked h2 {
+  color: red;
+  font-size: 7em;
+  font-weight: bold;
+  position: absolute;
+  left: 35%;
+  top: 13%;
+  -webkit-transform: rotate(-20deg);
+  transform: rotate(-20deg);
+}
