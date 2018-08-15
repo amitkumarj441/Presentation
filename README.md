@@ -1,5 +1,4 @@
 # Presentation
 Talks, Slides, Presentations and Keynotes
 
-Have a look at my [Docker Slide](http://slides.com/amitkumarjaiswal/docker-1).
-              [Rust Talk](http://amitkumarj441.github.io/Presentation/Rust)
+Check my slides at https://amitkumarj441.github.io/Presentation/Folder_Name, where `FOLDER_Name` is GBC2017 or CryptocurrencyIndia or QuartzWorkshop etc.
